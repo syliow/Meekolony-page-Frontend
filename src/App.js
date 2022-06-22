@@ -8,36 +8,24 @@ function App() {
   const [listings, setListings] = useState([]);
   const [sales, setSales] = useState([]);
 
-  const fetchMarketplaceData = async () => {
-    const { data } = axiosInstance.get("/nft");
-    if (data) {
-      setData(data);
-      console.log(data, "dataa");
-    } else {
-      setData("No data!");
-    }
-  };
-
-  const fetchNftListings = async () => {
-    const { data } = axiosInstance.get("/nft/listings");
-    if (data) {
-      setListings(data);
-      console.log(data, "dataa");
-    } else {
-      setListings("No data!");
-    }
-  };
-  const fetchNftSales = async () => {
-    const { data } = axiosInstance.get("/nft/sales");
-    if (data) {
-      setSales(data);
-      console.log(data, "dataa");
-    } else {
-      setSales("No data!");
-    }
-  };
-
   useEffect(() => {
+    const fetchMarketplaceData = async () => {
+      const { data } = axiosInstance.get("/nft").then((res) => {
+        setData(res.data);
+      });
+    };
+
+    const fetchNftListings = async () => {
+      const { data } = axiosInstance.get("/nft/listings").then((res) => {
+        setListings(res.data);
+      });
+    };
+    const fetchNftSales = async () => {
+      const { data } = axiosInstance.get("/nft/sales").then((res) => {
+        setSales(res.data);
+      });
+    };
+
     fetchMarketplaceData();
     fetchNftListings();
     fetchNftSales();
@@ -45,10 +33,26 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Frontend</h1>
-      <h3>{data}</h3>
-      <h3>{listings}</h3>
-      <h3>{sales}</h3>
+      <h1>Meekolony Collection Page</h1>
+      <h3>Data: {JSON.stringify(data)}</h3>
+      <h3>Listings: {listings.length}</h3>
+      <h3>Sales: {sales.length}</h3>
+
+      <br />
+      <h1>Meekolony Holder Page</h1>
+      <form
+      // onSubmit={this.handleSubmit}
+      >
+        <label>
+          Wallet Address: {""}
+          <input
+            type="text"
+            // value={this.state.value}
+            // onChange={this.handleChange}
+          />
+        </label>{" "}
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
