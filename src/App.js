@@ -2,10 +2,11 @@ import "./App.css";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { axiosInstance } from "./config";
+import { Box, Typography } from "@material-ui/core";
+import CardGrid from "./components/cardGrid";
 
 function App() {
   const [data, setData] = useState([]);
-  const [listings, setListings] = useState([]);
   const [sales, setSales] = useState([]);
 
   useEffect(() => {
@@ -15,11 +16,6 @@ function App() {
       });
     };
 
-    const fetchNftListings = async () => {
-      const { data } = axiosInstance.get("/nft/listings").then((res) => {
-        setListings(res.data);
-      });
-    };
     const fetchNftSales = async () => {
       const { data } = axiosInstance.get("/nft/sales").then((res) => {
         setSales(res.data);
@@ -27,16 +23,26 @@ function App() {
     };
 
     fetchMarketplaceData();
-    fetchNftListings();
     fetchNftSales();
   }, []);
 
   return (
     <div className="App">
       <h1>Meekolony Collection Page</h1>
-      <h3>Data: {JSON.stringify(data)}</h3>
-      <h3>Listings: {listings.length}</h3>
+      <Box>
+        <Typography>Floor price: {data.floorPrice / 1000000000}</Typography>
+        <Typography>
+          Total Volume: {(data.volumeAll / 1000000000).toFixed(2)}
+        </Typography>
+        <Typography>
+          Avg Sale Price: {(data.avgPrice24hr / 1000000000).toFixed(2)}
+        </Typography>
+        <Typography>Total Listed Count: {data.listedCount}</Typography>
+      </Box>
+      {/* <h3>Listings: {listings.length}</h3> */}
       <h3>Sales: {sales.length}</h3>
+
+      <CardGrid />
 
       <br />
       <h1>Meekolony Holder Page</h1>
