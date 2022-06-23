@@ -18,6 +18,8 @@ import {
   ViewColumn,
 } from "@material-ui/icons";
 import { axiosInstance } from "../config";
+import { Box, Typography } from "@material-ui/core";
+import moment from "moment";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -43,7 +45,7 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-export default function SimpleAction() {
+export default function ActivityTable() {
   const [data, setData] = useState([]);
   const [sales, setSales] = useState([]);
 
@@ -57,12 +59,55 @@ export default function SimpleAction() {
   return (
     <MaterialTable
       icons={tableIcons}
-      title="Activity Table"
+      title="Recent Sales"
       columns={[
+        {
+          title: "Transaction ID",
+          field: "signature",
+          render: (row) => {
+            return (
+              <Box>
+                <Typography
+                  style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    width: "100%",
+                    textOverflow: "clip ellipsis clip 0 3ch",
+                  }}
+                >
+                  {" "}
+                  {row.signature}
+                </Typography>
+              </Box>
+            );
+          },
+        },
+        {
+          title: "Transaction Type",
+          field: "type",
+          render: (row) => {
+            return <Box>{row.type === "buyNow" ? "Sale" : " Listed"}</Box>;
+          },
+        },
+        {
+          title: "Time",
+          field: "blockTime",
+          render: (row) => {
+            return (
+              <Box>
+                {moment.unix(row.blockTime).format("YYYY-MM-DD HH:mm:ss")}
+              </Box>
+            );
+          },
+        },
+        {
+          title: "Total Amount",
+          field: "price",
+          render: (row) => {
+            return <Box>{row.price} SOL</Box>;
+          },
+        },
         { title: "Mint Address", field: "tokenMint" },
-        { title: "Transaction ID", field: "signature" },
-        { title: "Price", field: "price", type: "numeric" },
-        { title: "Date", field: "blockTime" },
       ]}
       data={sales}
     />
