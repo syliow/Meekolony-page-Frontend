@@ -4,17 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import PhoneIcon from "@material-ui/icons/Phone";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import PersonPinIcon from "@material-ui/icons/PersonPin";
-import HelpIcon from "@material-ui/icons/Help";
-import ShoppingBasket from "@material-ui/icons/ShoppingBasket";
-import ThumbDown from "@material-ui/icons/ThumbDown";
-import ThumbUp from "@material-ui/icons/ThumbUp";
+import LayersIcon from '@material-ui/icons/Layers';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import CardGrid from "../components/cardGrid";
+import CardGrid from "../components/CardGrid";
 import ActivityTable from "../components/ActivityTable";
+import AddressChecker from "../components/AddressChecker";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,7 +75,7 @@ export default function ScrollableTabsButtonPrevent() {
           centered
         >
           <Tab
-            icon={<PhoneIcon />}
+            icon={<LayersIcon />}
             aria-label="phone"
             {...a11yProps(0)}
             label="Items"
@@ -89,7 +86,12 @@ export default function ScrollableTabsButtonPrevent() {
             {...a11yProps(1)}
             label="Sales"
           />
-          {/* <Tab icon={<PersonPinIcon />} aria-label="person" {...a11yProps(2)} /> */}
+          <Tab
+            icon={<AccountBalanceWalletIcon />}
+            aria-label="favorite"
+            {...a11yProps(1)}
+            label="Wallet Checker"
+          />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} style={{ marginTop: "30px" }}>
@@ -99,7 +101,7 @@ export default function ScrollableTabsButtonPrevent() {
         <ActivityTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <AddressChecker />
       </TabPanel>
     </div>
   );
