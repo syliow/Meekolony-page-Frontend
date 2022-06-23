@@ -11,6 +11,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import { axiosInstance } from "../config";
+import NftDialog from "./NftDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,10 +28,32 @@ export default function ImgMediaCard() {
   const [listings, setListings] = useState([]);
   const [startIndex, setStartIndex] = React.useState(0);
   const [isLoading, setLoading] = React.useState(false);
+  const [openNftInfo, setOpenNftInfo] = useState(false);
+  const [nftDetails, setNftDetails] = useState({});
   const classes = useStyles();
 
   const handleFetchListings = async () => {
     setStartIndex((prev) => prev + 20);
+  };
+
+  const handleOpenDialog = (nft) => {
+    setOpenNftInfo(true);
+    axiosInstance
+      .get("/nft/getData", {
+        params: {
+          mintAddress: nft.tokenMint,
+        },
+      })
+      .then((res) => {
+        setNftDetails(res.data);
+      })
+      .catch((err) => {
+        console.log(err, " error");
+      });
+  };
+  const handleCloseNftInfo = () => {
+    setOpenNftInfo(false);
+    setNftDetails({});
   };
 
   useEffect(() => {
@@ -47,15 +70,15 @@ export default function ImgMediaCard() {
           setLoading(false);
         });
     };
-
-    fetchNftListings();
+    setInterval(fetchNftListings(), 60000)
+    
   }, [startIndex]);
 
   return (
     <>
       <Grid container className={classes.root} spacing={2}>
         {listings.map((listing) => (
-          <Card className={classes.root}>
+          <Card className={classes.root} style={{margin:"50px"}}>
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -66,7 +89,7 @@ export default function ImgMediaCard() {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Meekolony #
+                  Rank: {listing.rarity.moonrank.rank}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Price: {listing.price}
@@ -74,7 +97,11 @@ export default function ImgMediaCard() {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => handleOpenDialog(listing)}
+              >
                 Details
               </Button>
             </CardActions>
@@ -83,11 +110,18 @@ export default function ImgMediaCard() {
       </Grid>
       <Button
         onClick={handleFetchListings}
-        style={{ backgroundColor: "red", marginTop: "30px" }}
-        disabled ={isLoading}
+        style={{ backgroundColor: "gray", marginTop: "30px" }}
+        disabled={isLoading}
       >
         {isLoading ? "Loading..." : "Load More"}
       </Button>
+
+      <NftDialog
+        handleOpen={openNftInfo}
+        handleClose={handleCloseNftInfo}
+        nftDetails={nftDetails}
+        loading={isLoading}
+      />
     </>
   );
 }
