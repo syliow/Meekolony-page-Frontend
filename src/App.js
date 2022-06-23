@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { axiosInstance } from "./config";
 import { Box, Typography } from "@material-ui/core";
 import CardGrid from "./components/cardGrid";
+import NavigationTab from "./components/NavigationTab";
 
 function App() {
   const [data, setData] = useState([]);
@@ -39,11 +40,9 @@ function App() {
         </Typography>
         <Typography>Total Listed Count: {data.listedCount}</Typography>
       </Box>
+      <NavigationTab />
       {/* <h3>Listings: {listings.length}</h3> */}
       <h3>Sales: {sales.length}</h3>
-
-      <CardGrid />
-
       <br />
       <h1>Meekolony Holder Page</h1>
       <form
