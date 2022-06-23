@@ -18,7 +18,7 @@ import {
   ViewColumn,
 } from "@material-ui/icons";
 import { axiosInstance } from "../config";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Button, Link } from "@material-ui/core";
 import moment from "moment";
 
 const tableIcons = {
@@ -51,7 +51,6 @@ export default function ActivityTable() {
 
   useEffect(() => {
     axiosInstance.get("/nft/sales").then((res) => {
-      console.log(res, "resss");
       setSales(res.data);
     });
   }, []);
@@ -66,19 +65,21 @@ export default function ActivityTable() {
           field: "signature",
           render: (row) => {
             return (
-              <Box>
+              <Button
+                style={{ textTransform: "none", cursor: "pointer" }}
+              >
                 <Typography
                   style={{
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     width: "100%",
                     textOverflow: "clip ellipsis clip 0 3ch",
+                    cursor: "pointer",
                   }}
                 >
-                  {" "}
                   {row.signature}
                 </Typography>
-              </Box>
+              </Button>
             );
           },
         },
