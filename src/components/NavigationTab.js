@@ -14,6 +14,7 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import CardGrid from "../components/cardGrid";
+import ActivityTable from "../components/ActivityTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -95,7 +96,7 @@ export default function ScrollableTabsButtonPrevent() {
         <CardGrid />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ActivityTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
