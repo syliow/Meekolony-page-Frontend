@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ImgMediaCard() {
   const [listings, setListings] = useState([]);
   const [startIndex, setStartIndex] = React.useState(0);
+  const [isLoading, setLoading] = React.useState(false);
   const classes = useStyles();
 
   const handleFetchListings = async () => {
@@ -34,6 +35,7 @@ export default function ImgMediaCard() {
 
   useEffect(() => {
     const fetchNftListings = async () => {
+      setLoading(true);
       const { data } = axiosInstance
         .get("/nft/listings", {
           params: {
@@ -42,6 +44,7 @@ export default function ImgMediaCard() {
         })
         .then((res) => {
           setListings((prev) => [...prev, ...res.data]);
+          setLoading(false);
         });
     };
 
@@ -78,8 +81,12 @@ export default function ImgMediaCard() {
           </Card>
         ))}
       </Grid>
-      <Button onClick={handleFetchListings} style={{ backgroundColor: "red", marginTop:"30px" }}>
-        Load More
+      <Button
+        onClick={handleFetchListings}
+        style={{ backgroundColor: "red", marginTop: "30px" }}
+        disabled ={isLoading}
+      >
+        {isLoading ? "Loading..." : "Load More"}
       </Button>
     </>
   );
