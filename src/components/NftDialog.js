@@ -65,107 +65,22 @@ export default function NftDialog(props) {
         </Box>
       ) : (
         <>
-          <CardMedia
-            image={nftDetails?.metadataTask?.result?.image}
-            style={{ width: 500, height: 500 }}
-          />
           <List>
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[0]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[0]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[1]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[1]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[2]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[2]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[3]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[3]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[4]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[4]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[5]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[5]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[6]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[6]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[7]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[7]?.value}
-              </Typography>
-            </ListItem>
-
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[8]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[8]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[9]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[9]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[10]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[10]?.value}
-              </Typography>
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <Typography>
-                {nftDetails?.metadataTask?.result?.attributes[11]?.trait_type}{" "}
-                {": "}
-                {nftDetails?.metadataTask?.result?.attributes[11]?.value}
-              </Typography>
-            </ListItem>
+            <CardMedia
+              image={nftDetails?.metadataTask?.result?.image}
+              style={{ width: 300, height: 300 }}
+            />
+            {nftDetails?.metadataTask?.result?.attributes.map((attribute) => (
+              <>
+                <ListItem button>
+                  <ListItemText
+                    primary={attribute.trait_type}
+                    secondary={attribute.value}
+                  />
+                </ListItem>
+                <Divider />
+              </>
+            ))}
           </List>
         </>
       )}
